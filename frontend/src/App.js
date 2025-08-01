@@ -40,21 +40,26 @@ function AppContent() {
   return (
     <>
       <ThemeSwitcher />
-      <div className="flex items-center gap-4 mb-8">
-        <Kanban
-          selectedProject={selectedProject}
-          projectAdded={projectAdded}
-          renderAddProjectButton={(props) => (
-            <ProjectSelector
-              {...props}
-              selectedProject={selectedProject}
-              setSelectedProject={setSelectedProject}
-              onProjectAdded={setProjectAdded}
-              onlyButton
-            />
-          )}
-        />
-      </div>
+      {/* Kanban tout en haut */}
+      <Kanban
+        selectedProject={selectedProject}
+        projectAdded={projectAdded}
+        renderAddProjectButton={(props) => (
+          <ProjectSelector
+            {...props}
+            selectedProject={selectedProject}
+            setSelectedProject={setSelectedProject}
+            onProjectAdded={setProjectAdded}
+            onlyButton
+          />
+        )}
+      />
+      {/* Sélecteur de projet principal */}
+      <ProjectSelector
+        selectedProject={selectedProject}
+        setSelectedProject={setSelectedProject}
+        onProjectAdded={setProjectAdded}
+      />
       <Notifications />
       <Dashboard selectedProject={selectedProject} projectAdded={projectAdded} />
       <Chatbot />

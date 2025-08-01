@@ -260,26 +260,7 @@ const Kanban = ({ selectedProject, projectAdded, renderAddProjectButton }) => {
           </div>
         ))}
       </div>
-      <div className="mt-8">
-        <h2 className="text-xl font-bold mb-4">Projets</h2>
-        <ul className="mb-8 flex flex-col gap-2">
-          {projects.map(p => (
-            <li key={p._id}>
-              <button
-                className={`w-full text-left bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-4 transform transition-transform hover:-translate-y-1 hover:scale-105 duration-300 font-semibold text-lg drop-shadow ${selectedProject === p._id ? 'text-green-600 border-green-600 ring-2 ring-green-200 dark:ring-green-400' : 'text-blue-700 dark:text-blue-300'}`}
-                onClick={() => {
-                  if (typeof window !== 'undefined') {
-                    const event = new CustomEvent('selectProject', { detail: { id: p._id } });
-                    window.dispatchEvent(event);
-                  }
-                }}
-              >
-                {p.name}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+
 
       {/* Modal de détails de tâche */}
       {selectedTaskDetail && (

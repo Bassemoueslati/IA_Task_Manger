@@ -9,7 +9,11 @@ const Dashboard = ({ selectedProject }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const resTasks = await fetch('/api/tasks', { headers: { Authorization: `Bearer ${token}` } });
+      let url = '/api/tasks';
+      if (selectedProject) {
+        url += `?project=${selectedProject}`;
+      }
+      const resTasks = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
       setTasks(await resTasks.json());
     };
     fetchData();
@@ -33,7 +37,7 @@ const Dashboard = ({ selectedProject }) => {
       window.removeEventListener('taskAdded', onTaskAdded);
       window.removeEventListener('taskUpdated', onTaskUpdated);
     };
-  }, [token]);
+  }, [token, selectedProject]);
 
   const handleEditTask = (task) => {
     setEditTask(task);
@@ -73,14 +77,14 @@ const Dashboard = ({ selectedProject }) => {
     }
   };
 
-  // Filtrage des tâches selon le projet sélectionné
-  const filteredTasks = selectedProject
-    ? tasks.filter(t => t.project === selectedProject)
-    : tasks;
+  // Les tâches sont déjà filtrées par le backend
+  const filteredTasks = tasks;
 
   return (
     <div className="p-8">
-      <h2 className="text-xl font-bold mb-4">Tâches</h2>
+      <h2 className="text-xl font-bold mb-4">
+        Tâches {selectedProject ? '(Projet sélectionné)' : '(Tous les projets)'}
+      </h2>
       <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredTasks.map(t => (
           <li key={t._id}>
